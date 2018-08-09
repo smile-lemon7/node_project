@@ -1,0 +1,16 @@
+body {
+  /*padding: 50px;*/
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.table>tbody>tr>td {
+	vertical-align: middle;
+}
+.movieNav{
+	line-height: 32px;
+	margin-right: 30px;
+}

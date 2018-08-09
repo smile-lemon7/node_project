@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>导演</title>
+		<meta name='referrer' content='no-referrer'></meta>
+		<Link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css' />
+		<Link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
+		<Link rel='stylesheet' href='/stylesheets/ionicons.min.css' />
+		<Link rel='stylesheet' href='/admin-lte/dist/css/AdminLTE.min.css' />
+		<Link rel='stylesheet' href='/admin-lte/dist/css/skins/skin-blue.min.css' />
+		<Link rel='stylesheet' href='/stylesheets/style.css' />
+
+	</head>
+	<style>
+		input[type='text'] {
+			width: 25px;
+			height: 30px;
+			text-align: center;
+		}
+	</style>
+
+	<body class="hold-transition skin-blue sidebar-mini">
+
+		<div class="wrapper">
+			<%- include('./header.ejs') %>
+			<%- include('./menu.ejs') %>
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+       		 			导演
+      				</h1>
+					<ol class="breadcrumb">
+						<li>
+							<a href="#"><i class="fa fa-dashboard"></i> Level</a>
+						</li>
+						<li class="active">Here</li>
+					</ol>
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+
+					<!-- Your Page Content Here -->
+
+					<div class="box">
+						<div class="box-header">
+							<a href="/addDirectorRoute"><button class="btn btn-success">添加</button></a>
+							<div class="pull-right">
+								<a href="/directors"><button class="btn btn-default">显示全部</button></a>
+								<button class="btn btn-default" onclick="gofirstPage( <%= limitNum %> )">首页</button>
+								<button class="btn btn-default" onclick="goPrevPage( <%= limitNum %>, <%= skipNum %> )">上一页</button>
+								<input type="text" value='<%= skipNum + 1 %>' /> /
+								<input type="text" value='<%= totalNum %>' disabled/>
+								<button class="btn btn-default" onclick="goNextPage( <%= limitNum %>, <%= skipNum %>, <%= totalNum %> )">下一页</button>
+								<button class="btn btn-default" onclick="goLastPage( <%= limitNum %>, <%= totalNum %> )">尾页</button> 每页显示
+								<select onchange="showNum( <%= limitNum %>, <%= skipNum %> )" id="select">
+									<% if( limitNum == 5 ) { %>
+									<option value="5" selected>5</option>
+									<option value="10">10</option>
+									<% } else if ( limitNum == 10 ) {%>
+									<option value="5">5</option>
+									<option value="10" selected>10</option>
+									<%}%>
+								</select>个
+							</div>
+
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body no-padding">
+							<table class="table table-condensed">
+								<tr>
+									<th class="text-center">#序号</th>
+									<th class="text-center">姓名</th>
+									<th class="text-center">头像</th>
+									<th class="text-center">操作</th>
+								</tr>
+
+								<% for(var i=0; i<listLen; i++ ){ %>
+								<tr>
+									<td class="text-center">
+										<%= i+1 %>
+									</td>
+									<td class="text-center">
+										<%= result[i].name %>
+									</td>
+									<td class="text-center">
+										<img src="<%= result[i].avatars.small %>" alt="" height='40' />
+									</td>
+									<td class="text-center">
+										<button class="btn btn-warning" onclick="updateItem( <%= result[i].id %>, <%= limitNum %>, <%= skipNum %> )">编辑</button>
+										<button class="btn btn-danger" onclick="deleteItem(<%= result[i].id %>, <%= limitNum %>, <%= skipNum %>)">删除</button>
+									</td>
+								</tr>
+								<%}%>
+
+							</table>
+						</div>
+						<!-- /.box-body -->
+					</div>
+
+				</section>
+				<!-- /.content -->
+			</div>
+			<!-- /.content-wrapper -->
+
+			<%- include('./footer.ejs') %>
+			<%- include('./sidebar.ejs') %>
+
+		</div>
+		<!-- ./wrapper -->
+
+	</body>
+	<script src="/javascripts/jquery.min.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/javascripts/app.min.js"></script>
+	<script>
+		//分页-----首页
+		function gofirstPage(limitNum) {
+			window.location.href = 'http://localhost:3000/directorspaging?limitNum=' + limitNum + '&skipNum=0';
+		}
+
+		//分页-----尾页
+		function goLastPage(limitNum, totalNum) {
+			skipNum = totalNum - 1;
+			window.location.href = 'http://localhost:3000/directorspaging?limitNum=' + limitNum + '&skipNum=' + skipNum;
+		}
+
+		//分页----上一页
+		function goPrevPage(limitNum, skipNum) {
+			if(skipNum <= 0) {
+				window.location.href = 'http://localhost:3000/directorspaging?limitNum=' + limitNum + '&skipNum=0';
+			} else {
+				skipNum = skipNum - 1;
+				window.location.href = 'http://localhost:3000/directorspaging?limitNum=' + limitNum + '&skipNum=' + skipNum;
+			}
+		}
+
+		//分页----下一页
+		function goNextPage(limitNum, skipNum, totalNum) {
+			if(skipNum >= totalNum - 1) {
+				window.location.href = 'http://localhost:3000/directorspaging?limitNum=' + limitNum + '&skipNum=' + (totalNum - 1);
+			} else {
+				skipNum += 1;
+				window.location.href = 'http://localhost:3000/directorspaging?limitNum=' + limitNum + '&skipNum=' + skipNum;
+			}
+		}
+
+		//每页显示多少个
+		function showNum(limitNum, skipNum) {
+			var showNum = $('#select').val();
+			//			alert(showNum);
+			limitNum = showNum;
+			skipNum = 0;
+			window.location.href = 'http://localhost:3000/directorspaging?limitNum=' + limitNum + '&skipNum=' + skipNum;
+		}
+
+		//删除
+
+		function deleteItem(id, limitNum, skipNum) {
+			window.location.href = 'http://localhost:3000/deleteDirectorRouter?id=' + id + '&limitNum=' + limitNum + '&skipNum=' + skipNum;
+		}
+		
+		//修改
+		function updateItem( id, limitNum, skipNum ) {
+			window.location.href = 'http://localhost:3000/updateDirectorRoute?id=' + id + '&limitNum=' + limitNum + '&skipNum=' + skipNum;
+		}
+	</script>
+
+</html>

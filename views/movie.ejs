@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>电影</title>
+		<Link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css' />
+		<Link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
+		<Link rel='stylesheet' href='/stylesheets/ionicons.min.css' />
+		<Link rel='stylesheet' href='/admin-lte/dist/css/AdminLTE.min.css' />
+		<Link rel='stylesheet' href='/admin-lte/dist/css/skins/skin-blue.min.css' />
+		<link rel="stylesheet" href="/stylesheets/style.css" />
+
+	</head>
+	<style>
+		input[type=text] {
+			width: 50px;
+			height: 26px;
+		}
+		
+	</style>
+
+	<body class="hold-transition skin-blue sidebar-mini">
+
+		<div class="wrapper">
+			<%- include('./header.ejs') %>
+			<%- include('./menu.ejs') %>
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>电影管理</h1>
+					<ol class="breadcrumb">
+						<li>
+							<a href="#"><i class="fa fa-dashboard"></i> Level</a>
+						</li>
+						<li class="active">Here</li>
+					</ol>
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+					<!-- Your Page Content Here -->
+					
+					<div class="box">
+						<div class="box-header">
+							<!--<a href="/addDirectorRoute"><button class="btn btn-success">添加</button></a>-->
+							<div class="movieNav pull-left">
+								
+								评分：<input type="text" class="min text-center" value="<%= min %>"/> - 
+								<input type="text" class="max text-center"  value="<%= max %>" onblur="areaQueryMovie()"/>
+							</div>
+							<div class="movieNav pull-left">
+								上映年份：<select name="" id="select" onchange="getMovieYear()" >
+									<option value="">请选择年份</option>
+								<% for(var i = 0; i < yearArr.length; i++ ){%>
+					            	<!--<a href = ""><%= yearArr[i] %></a>-->
+						            	<option value="<%= yearArr[i] %>"><%= yearArr[i] %></option>
+					            <% }%>
+					            </select>
+							</div>
+							
+							<div class="input-group input-group-sm pull-right" style="width: 150px;">
+			                  	<input type="text" name="table_search" class="form-control pull-right searchInp" placeholder="Search">
+			
+			                   	<div class="input-group-btn search" onclick="searchMovie()">
+			                    	<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+			                   	</div>
+			                </div>
+							<!--<div class="pull-right">
+								<input type="text" placeholder="请输入电影名称搜索" id='search' onchange="searchMovie()"/>
+							</div>-->
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body no-padding">
+							<table class="table table-condensed">
+								<tr>
+									<th class="text-center">#序号</th>
+									<th class="text-center">电影名称</th>
+									<th class="text-center">图片</th> 
+									<th class="text-center">评分&ensp;
+										<a href="/sortMovie?type=average&num=1&min=<%= min %>" class="fa fa-long-arrow-up"></a>
+										<a href="/sortMovie?type=average&num=-1&min=<%= max %>" class="fa fa-long-arrow-down"></a>
+									</th>
+									<th class="text-center">上映年份&ensp;
+										<a href="/sortMovie?type=year&num=1&min=<%= min %>" class="fa fa-long-arrow-up"></a>
+										<a href="/sortMovie?type=year&num=-1&min=<%= max %>" class="fa fa-long-arrow-down"></a>
+									
+									</th>
+									<th class="text-center">票房</th>
+									<th class="text-center">操作</th>
+								</tr>
+								
+								<% for( var i = 0; i < result.length; i++ ){ %>
+									<tr>
+										<td class="text-center"><%= i+1 %></td>
+										<td class="text-center"><%= result[i].title %></td>
+										<td class="text-center">
+											<img src="<%= result[i].images %>" alt="" width=30/>
+										</td>
+										<td class="text-center"><%= result[i].average %></td>
+										<td class="text-center"><%= result[i].year %></td>
+										<td class="text-center"><%= result[i].collect_count %></td>
+										
+										
+										<td class="text-center">
+											<button class="btn btn-warning">编辑</button>
+											<button class="btn btn-danger">删除</button>
+										</td>
+									</tr>
+								<%}%>
+									
+
+							</table>
+						</div>
+						<!-- /.box-body -->
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					
+
+				</section>
+				<!-- /.content -->
+			</div>
+			<!-- /.content-wrapper -->
+
+			<%- include('./footer.ejs') %>
+			<%- include('./sidebar.ejs') %>
+
+		</div>
+		<!-- ./wrapper -->
+
+	</body>
+	<script src="/javascripts/jquery.min.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/javascripts/app.min.js"></script>
+	<script>
+		function getMovieYear() {
+			var movieYear = $('#select').val();
+			window.location.href = '/getMovie?movieYear='+movieYear;
+		}
+		function areaQueryMovie(areaType) {
+			var min = $('.min').val();
+			var max = $('.max').val();
+			window.location.href = '/areaQueryMovie?areaType=average&min='+min+'&max='+max;
+		}
+		
+		function searchMovie() {
+			var val = $('.searchInp').val();
+			window.location.href = '/searchMovie?title='+val;
+		}
+		
+	</script>
+
+</html>

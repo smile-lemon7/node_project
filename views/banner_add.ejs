@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>添加轮播图</title>
+		<meta name='referrer' content='no-referrer'></meta>
+		<Link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css' />
+		<Link rel='stylesheet' href='/stylesheets/font-awesome.min.css' />
+		<Link rel='stylesheet' href='/stylesheets/ionicons.min.css' />
+		<Link rel='stylesheet' href='/admin-lte/dist/css/AdminLTE.min.css' />
+		<Link rel='stylesheet' href='/admin-lte/dist/css/skins/skin-blue.min.css' />
+		<Link rel='stylesheet' href='/stylesheets/style.css' />
+
+	</head>
+	<style>
+	</style>
+
+	<body class="hold-transition skin-blue sidebar-mini">
+
+		<div class="wrapper">
+			<%- include('./header.ejs') %>
+			<%- include('./menu.ejs') %>
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+       		 			添加轮播
+      				</h1>
+					<ol class="breadcrumb">
+						<li>
+							<a href="#"><i class="fa fa-dashboard"></i> Level</a>
+						</li>
+						<li class="active">Here</li>
+					</ol>
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+
+					<!-- Your Page Content Here -->
+					<div class="box box-info">
+			            <div class="box-header with-border">
+			            	<h3 class="box-title">Horizontal Form</h3>
+			            </div>
+			            <!-- /.box-header -->
+			            <!-- form start -->
+			            <form class="form-horizontal" method='post' action='/bannerAddAction' enctype="multipart/form-data">
+			             	<div class="box-body">
+				                <div class="form-group">
+				                	<label for="bannerID" class="col-sm-2 control-label">轮播图ID</label>
+				
+					                <div class="col-sm-10">
+					                	<input type="text" class="form-control" id="bannerID" placeholder="bannerID" name='bannerID'>
+					                </div>
+			                	</div>
+				                <div class="form-group">
+				                  	<label for="bannerImg" class="col-sm-2 control-label">上传图片</label>
+				
+				                  	<div class="col-sm-10">
+				                    	<!--<input type="flie" class="form-control" id="flie" name="flie" placeholder="flie">-->
+				                    		<input type="file" name='bannerImg' id='bannerImg'>
+				                  	</div>
+				                </div>
+			              		<div class="form-group">
+				                  	<label for="" class="col-sm-2 control-label">展示图片</label>
+				
+				                  	<div class="col-sm-10">
+				                    	<!--<input type="url" class="form-control" id="bannerImg" name="bannerImg" placeholder="bannerImg">-->
+				                  	</div>
+				                </div>
+				                <div class="form-group">
+				                  	<label for="bannerAlt" class="col-sm-2 control-label">链接地址</label>
+				
+				                  	<div class="col-sm-10">
+				                    	<input type="url" class="form-control" id="bannerUrl" name="bannerUrl" placeholder="bannerUrl">
+				                  	</div>
+				                </div>
+			              
+			              
+			              	</div>
+			              <!-- /.box-body -->
+			              	<div class="box-footer">
+			                	<div class="form-group">
+				                  	<label for="directorAlt" class="col-sm-2 control-label sr-only" >alt</label>
+				
+				                  	<div class="col-sm-10">
+				                    	<input type="submit" class="btn btn-info" value="上传"></input>
+				                  	</div>
+				                </div>
+			                	
+			                	
+			              	</div>
+			               <!--/.box-footer--> 
+			            </form>
+			        </div>
+				
+
+				</section>
+				<!-- /.content -->
+			</div>
+			<!-- /.content-wrapper -->
+
+			<%- include('./footer.ejs') %>
+			<%- include('./sidebar.ejs') %>
+
+		</div>
+		<!-- ./wrapper -->
+
+	</body>
+	<script src="/javascripts/jquery.min.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/javascripts/app.min.js"></script>
+	<script>
+		
+	
+		
+	</script>
+</html>
